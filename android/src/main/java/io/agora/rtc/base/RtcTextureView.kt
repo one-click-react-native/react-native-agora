@@ -7,22 +7,33 @@ import io.agora.rtc.RtcChannel
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
 import java.lang.ref.WeakReference
+import io.agora.rtc.mediaio.MediaIO.BufferType.TEXTURE
+import io.agora.rtc.mediaio.MediaIO.PixelFormat.TEXTURE_OES
+import io.agora.rtc.mediaio.AgoraTextureView
+import io.agora.rtc.mediaio.AgoraTextureCamera
 
 class RtcTextureView(
   context: Context
 ) : FrameLayout(context) {
-  private var texture: TextureView
+  private var texture: AgoraTextureView
   private var canvas: VideoCanvas
   private var channel: WeakReference<RtcChannel>? = null
+  private var _source: AgoraTextureCamera = null;
 
   init {
     try {
-      texture = RtcEngine.CreateTextureView(context)
+      _source = AgoraTextureCamera(context, 1280, 720);
+      RtcEngine.instance().setVideoSource(_source)
+      texture = AgoraTextureView(context)
+      texture.init(_source.getEglContext())
+      texture.setBufferType(TEXTURE);
+      texture.setPixelFormat(TEXTURE_OES)
+      texture.setMirror(true)
     } catch (e: UnsatisfiedLinkError) {
       throw RuntimeException("Please init RtcEngine first!")
     }
     canvas = VideoCanvas(texture)
-    addView(texture)
+    addView(render)
   }
 
   fun setData(engine: RtcEngine, channel: RtcChannel?, uid: Int) {
@@ -43,7 +54,14 @@ class RtcTextureView(
 
   private fun setupVideoCanvas(engine: RtcEngine) {
     removeAllViews()
-    texture = RtcEngine.CreateTextureView(context.applicationContext)
+    _source = null
+    _source = AgoraTextureCamera(context, 1280, 720);
+    engine.setVideoSource(_source)
+    texture = AgoraTextureView(context.applicationContext)
+    texture.init(_source.getEglContext())
+    texture.setBufferType(TEXTURE);
+    texture.setPixelFormat(TEXTURE_OES)
+    texture.setMirror(true)
     addView(texture)
     texture.layout(0, 0, width, height)
     canvas.view = texture

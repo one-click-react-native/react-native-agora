@@ -5,6 +5,7 @@ import io.agora.rtc.*
 import io.agora.rtc.internal.EncryptionConfig
 import io.agora.rtc.models.UserInfo
 import io.agora.rtc.mediaio.AgoraTextureCamera;
+import io.agora.rtc.base.CommanInstance
 
 class IRtcEngine {
   interface RtcEngineInterface : RtcUserInfoInterface, RtcAudioInterface, RtcVideoInterface,
@@ -358,6 +359,7 @@ class RtcEngineManager(
   private val emit: (methodName: String, data: Map<String, Any?>?) -> Unit
 ) : IRtcEngine.RtcEngineInterface {
   var engine: RtcEngine? = null
+  var mContext: Context? = null
     private set
   private var mediaObserver: MediaObserver? = null
 
@@ -374,11 +376,14 @@ class RtcEngineManager(
         emit(methodName, data)
       }
     })
+    CommanInstance.setContext(mContext)
     callback.code((engine as RtcEngineEx).setAppType((params["appType"] as Number).toInt()))
   }
 
   override fun destroy(callback: Callback) {
     callback.resolve(engine) { release() }
+    mContext = null
+    CommanInstance.clean(null)
   }
 
   override fun setChannelProfile(params: Map<String, *>, callback: Callback) {
@@ -425,7 +430,8 @@ class RtcEngineManager(
   }
 
   override fun setVideoSource(params: Map<String, *>, callback: Callback) {
-    val _source: AgoraTextureCamera = AgoraTextureCamera(this, 1280, 720);
+    val _source: AgoraTextureCamera = AgoraTextureCamera(mContext, 1280, 720);
+    CommanInstance.setAgoraTextureCamera(_source)
     engine?.setVideoSource(_source)
   }
 
