@@ -4,6 +4,7 @@ import android.content.Context
 import io.agora.rtc.*
 import io.agora.rtc.internal.EncryptionConfig
 import io.agora.rtc.models.UserInfo
+import io.agora.rtc.mediaio.AgoraTextureCamera;
 
 class IRtcEngine {
   interface RtcEngineInterface : RtcUserInfoInterface, RtcAudioInterface, RtcVideoInterface,
@@ -28,6 +29,8 @@ class IRtcEngine {
     fun leaveChannel(callback: Callback)
 
     fun renewToken(params: Map<String, *>, callback: Callback)
+
+    fun setVideoSource(params: Map<String, *>, callback: Callback)
 
     @Deprecated("")
     fun enableWebSdkInteroperability(params: Map<String, *>, callback: Callback)
@@ -419,6 +422,11 @@ class RtcEngineManager(
 
   override fun renewToken(params: Map<String, *>, callback: Callback) {
     callback.code(engine?.renewToken(params["token"] as String))
+  }
+
+  override fun setVideoSource(params: Map<String, *>, callback: Callback) {
+    val _source: AgoraTextureCamera = AgoraTextureCamera(this, 1280, 720);
+    engine?.setVideoSource(_source)
   }
 
   override fun enableWebSdkInteroperability(params: Map<String, *>, callback: Callback) {

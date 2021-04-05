@@ -346,6 +346,13 @@ export default class RtcEngine implements RtcEngineInterface {
   }
 
   /**
+   Allows user to set custom video source
+   */
+  setVideoSource(): Promise<void> {
+    return RtcEngine._callMethod('setVideoSource');
+  }
+  
+  /**
    * Allows a user to join a channel.
    *
    * Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other.
