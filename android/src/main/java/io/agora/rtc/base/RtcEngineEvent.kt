@@ -196,11 +196,11 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.ApiCallExecuted, error, api, result)
   }
 
-  override fun onJoinChannelSuccess(channel: String?, uid: UInt, elapsed: Int) {
+  override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
     callback(RtcEngineEvents.JoinChannelSuccess, channel, uid, elapsed)
   }
 
-  override fun onRejoinChannelSuccess(channel: String?, uid: UInt, elapsed: Int) {
+  override fun onRejoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
     callback(RtcEngineEvents.RejoinChannelSuccess, channel, uid, elapsed)
   }
 
@@ -208,11 +208,11 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.LeaveChannel, stats?.toMap())
   }
 
-  override fun onLocalUserRegistered(uid: UInt, userAccount: String?) {
+  override fun onLocalUserRegistered(uid: Int, userAccount: String?) {
     callback(RtcEngineEvents.LocalUserRegistered, uid, userAccount)
   }
 
-  override fun onUserInfoUpdated(uid: UInt, userInfo: UserInfo?) {
+  override fun onUserInfoUpdated(uid: Int, userInfo: UserInfo?) {
     callback(RtcEngineEvents.UserInfoUpdated, uid, userInfo?.toMap())
   }
 
@@ -220,11 +220,11 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.ClientRoleChanged, oldRole, newRole)
   }
 
-  override fun onUserJoined(uid: UInt, elapsed: Int) {
+  override fun onUserJoined(uid: Int, elapsed: Int) {
     callback(RtcEngineEvents.UserJoined, uid, elapsed)
   }
 
-  override fun onUserOffline(uid: UInt, @Annotations.AgoraUserOfflineReason reason: Int) {
+  override fun onUserOffline(uid: Int, @Annotations.AgoraUserOfflineReason reason: Int) {
     callback(RtcEngineEvents.UserOffline, uid, reason)
   }
 
@@ -252,7 +252,7 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.AudioVolumeIndication, speakers?.toMapList(), totalVolume)
   }
 
-  override fun onActiveSpeaker(uid: UInt) {
+  override fun onActiveSpeaker(uid: Int) {
     callback(RtcEngineEvents.ActiveSpeaker, uid)
   }
 
@@ -265,15 +265,15 @@ class RtcEngineEventHandler(
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStateChanged"))
-  override fun onUserMuteVideo(uid: UInt, muted: Boolean) {
+  override fun onUserMuteVideo(uid: Int, muted: Boolean) {
     callback(RtcEngineEvents.UserMuteVideo, uid, muted)
   }
 
-  override fun onVideoSizeChanged(uid: UInt, width: Int, height: Int, @IntRange(from = 0, to = 360) rotation: Int) {
+  override fun onVideoSizeChanged(uid: Int, width: Int, height: Int, @IntRange(from = 0, to = 360) rotation: Int) {
     callback(RtcEngineEvents.VideoSizeChanged, uid, width, height, rotation)
   }
 
-  override fun onRemoteVideoStateChanged(uid: UInt, @Annotations.AgoraVideoRemoteState state: Int, @Annotations.AgoraVideoRemoteStateReason reason: Int, elapsed: Int) {
+  override fun onRemoteVideoStateChanged(uid: Int, @Annotations.AgoraVideoRemoteState state: Int, @Annotations.AgoraVideoRemoteStateReason reason: Int, elapsed: Int) {
     callback(RtcEngineEvents.RemoteVideoStateChanged, uid, state, reason, elapsed)
   }
 
@@ -281,7 +281,7 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.LocalVideoStateChanged, localVideoState, error)
   }
 
-  override fun onRemoteAudioStateChanged(uid: UInt, @Annotations.AgoraAudioRemoteState state: Int, @Annotations.AgoraAudioRemoteStateReason reason: Int, elapsed: Int) {
+  override fun onRemoteAudioStateChanged(uid: Int, @Annotations.AgoraAudioRemoteState state: Int, @Annotations.AgoraAudioRemoteStateReason reason: Int, elapsed: Int) {
     callback(RtcEngineEvents.RemoteAudioStateChanged, uid, state, reason, elapsed)
   }
 
@@ -293,7 +293,7 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.LocalPublishFallbackToAudioOnly, isFallbackOrRecover)
   }
 
-  override fun onRemoteSubscribeFallbackToAudioOnly(uid: UInt, isFallbackOrRecover: Boolean) {
+  override fun onRemoteSubscribeFallbackToAudioOnly(uid: Int, isFallbackOrRecover: Boolean) {
     callback(RtcEngineEvents.RemoteSubscribeFallbackToAudioOnly, uid, isFallbackOrRecover)
   }
 
@@ -321,7 +321,7 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.LastmileQuality, quality)
   }
 
-  override fun onNetworkQuality(uid: UInt, @Annotations.AgoraNetworkQuality txQuality: Int, @Annotations.AgoraNetworkQuality rxQuality: Int) {
+  override fun onNetworkQuality(uid: Int, @Annotations.AgoraNetworkQuality txQuality: Int, @Annotations.AgoraNetworkQuality rxQuality: Int) {
     callback(RtcEngineEvents.NetworkQuality, uid, txQuality, rxQuality)
   }
 
@@ -343,7 +343,7 @@ class RtcEngineEventHandler(
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStats"))
-  override fun onRemoteVideoStat(uid: UInt, delay: Int, receivedBitrate: Int, receivedFrameRate: Int) {
+  override fun onRemoteVideoStat(uid: Int, delay: Int, receivedBitrate: Int, receivedFrameRate: Int) {
     // TODO Not in iOS
   }
 
@@ -376,15 +376,15 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.TranscodingUpdated)
   }
 
-  override fun onStreamInjectedStatus(url: String?, uid: UInt, @Annotations.AgoraInjectStreamStatus status: Int) {
+  override fun onStreamInjectedStatus(url: String?, uid: Int, @Annotations.AgoraInjectStreamStatus status: Int) {
     callback(RtcEngineEvents.StreamInjectedStatus, url, uid, status)
   }
 
-  override fun onStreamMessage(uid: UInt, streamId: Int, data: ByteArray?) {
+  override fun onStreamMessage(uid: Int, streamId: Int, data: ByteArray?) {
     callback(RtcEngineEvents.StreamMessage, uid, streamId, data?.let { String(it, Charsets.UTF_8) })
   }
 
-  override fun onStreamMessageError(uid: UInt, streamId: Int, @Annotations.AgoraErrorCode error: Int, missed: Int, cached: Int) {
+  override fun onStreamMessageError(uid: Int, streamId: Int, @Annotations.AgoraErrorCode error: Int, missed: Int, cached: Int) {
     callback(RtcEngineEvents.StreamMessageError, uid, streamId, error, missed, cached)
   }
 
@@ -405,22 +405,22 @@ class RtcEngineEventHandler(
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStateChanged"))
-  override fun onFirstRemoteVideoFrame(uid: UInt, width: Int, height: Int, elapsed: Int) {
+  override fun onFirstRemoteVideoFrame(uid: Int, width: Int, height: Int, elapsed: Int) {
     callback(RtcEngineEvents.FirstRemoteVideoFrame, uid, width, height, elapsed)
   }
 
   @Deprecated("", ReplaceWith("onRemoteAudioStateChanged"))
-  override fun onFirstRemoteAudioFrame(uid: UInt, elapsed: Int) {
+  override fun onFirstRemoteAudioFrame(uid: Int, elapsed: Int) {
     callback(RtcEngineEvents.FirstRemoteAudioFrame, uid, elapsed)
   }
 
   @Deprecated("", ReplaceWith("onRemoteAudioStateChanged"))
-  override fun onFirstRemoteAudioDecoded(uid: UInt, elapsed: Int) {
+  override fun onFirstRemoteAudioDecoded(uid: Int, elapsed: Int) {
     callback(RtcEngineEvents.FirstRemoteAudioDecoded, uid, elapsed)
   }
 
   @Deprecated("", ReplaceWith("onRemoteAudioStateChanged"))
-  override fun onUserMuteAudio(uid: UInt, muted: Boolean) {
+  override fun onUserMuteAudio(uid: Int, muted: Boolean) {
     callback(RtcEngineEvents.UserMuteAudio, uid, muted)
   }
 
@@ -435,27 +435,27 @@ class RtcEngineEventHandler(
   }
 
   @Deprecated("", ReplaceWith("onRemoteAudioStats"))
-  override fun onRemoteAudioTransportStats(uid: UInt, delay: Int, lost: Int, rxKBitRate: Int) {
+  override fun onRemoteAudioTransportStats(uid: Int, delay: Int, lost: Int, rxKBitRate: Int) {
     callback(RtcEngineEvents.RemoteAudioTransportStats, uid, delay, lost, rxKBitRate)
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStats"))
-  override fun onRemoteVideoTransportStats(uid: UInt, delay: Int, lost: Int, rxKBitRate: Int) {
+  override fun onRemoteVideoTransportStats(uid: Int, delay: Int, lost: Int, rxKBitRate: Int) {
     callback(RtcEngineEvents.RemoteVideoTransportStats, uid, delay, lost, rxKBitRate)
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStateChanged"))
-  override fun onUserEnableVideo(uid: UInt, enabled: Boolean) {
+  override fun onUserEnableVideo(uid: Int, enabled: Boolean) {
     callback(RtcEngineEvents.UserEnableVideo, uid, enabled)
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStateChanged"))
-  override fun onUserEnableLocalVideo(uid: UInt, enabled: Boolean) {
+  override fun onUserEnableLocalVideo(uid: Int, enabled: Boolean) {
     callback(RtcEngineEvents.UserEnableLocalVideo, uid, enabled)
   }
 
   @Deprecated("", ReplaceWith("onRemoteVideoStateChanged"))
-  override fun onFirstRemoteVideoDecoded(uid: UInt, width: Int, height: Int, elapsed: Int) {
+  override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
     callback(RtcEngineEvents.FirstRemoteVideoDecoded, uid, width, height, elapsed)
   }
 
@@ -475,7 +475,7 @@ class RtcEngineEventHandler(
   }
 
   @Deprecated("", ReplaceWith("onRemoteAudioStats"))
-  override fun onAudioQuality(uid: UInt, @Annotations.AgoraNetworkQuality quality: Int, delay: Short, lost: Short) {
+  override fun onAudioQuality(uid: Int, @Annotations.AgoraNetworkQuality quality: Int, delay: Short, lost: Short) {
     callback(RtcEngineEvents.AudioQuality, uid, quality, delay, lost)
   }
 
@@ -505,11 +505,11 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.VideoPublishStateChanged, channel, oldState, newState, elapseSinceLastState)
   }
 
-  override fun onAudioSubscribeStateChanged(channel: String?, uid: UInt, @Annotations.AgoraStreamSubscribeState oldState: Int, @Annotations.AgoraStreamSubscribeState newState: Int, elapseSinceLastState: Int) {
+  override fun onAudioSubscribeStateChanged(channel: String?, uid: Int, @Annotations.AgoraStreamSubscribeState oldState: Int, @Annotations.AgoraStreamSubscribeState newState: Int, elapseSinceLastState: Int) {
     callback(RtcEngineEvents.AudioSubscribeStateChanged, channel, uid, oldState, newState, elapseSinceLastState)
   }
 
-  override fun onVideoSubscribeStateChanged(channel: String?, uid: UInt, @Annotations.AgoraStreamSubscribeState oldState: Int, @Annotations.AgoraStreamSubscribeState newState: Int, elapseSinceLastState: Int) {
+  override fun onVideoSubscribeStateChanged(channel: String?, uid: Int, @Annotations.AgoraStreamSubscribeState oldState: Int, @Annotations.AgoraStreamSubscribeState newState: Int, elapseSinceLastState: Int) {
     callback(RtcEngineEvents.VideoSubscribeStateChanged, channel, uid, oldState, newState, elapseSinceLastState)
   }
 
@@ -517,7 +517,7 @@ class RtcEngineEventHandler(
     callback(RtcEngineEvents.RtmpStreamingEvent, url, error)
   }
 
-  override fun onUserSuperResolutionEnabled(uid: UInt, enabled: Boolean, @Annotations.AgoraSuperResolutionStateReason reason: Int) {
+  override fun onUserSuperResolutionEnabled(uid: Int, enabled: Boolean, @Annotations.AgoraSuperResolutionStateReason reason: Int) {
     callback(RtcEngineEvents.UserSuperResolutionEnabled, uid, enabled, reason)
   }
 
