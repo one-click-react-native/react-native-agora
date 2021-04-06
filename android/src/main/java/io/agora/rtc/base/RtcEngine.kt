@@ -376,14 +376,13 @@ class RtcEngineManager(
         emit(methodName, data)
       }
     })
-    CommanInstance.setContext(mContext)
     callback.code((engine as RtcEngineEx).setAppType((params["appType"] as Number).toInt()))
   }
 
   override fun destroy(callback: Callback) {
     callback.resolve(engine) { release() }
     mContext = null
-    CommanInstance.clean(null)
+    CommanInstance.clean()
   }
 
   override fun setChannelProfile(params: Map<String, *>, callback: Callback) {
@@ -430,9 +429,9 @@ class RtcEngineManager(
   }
 
   override fun setVideoSource(params: Map<String, *>, callback: Callback) {
-    val _source: AgoraTextureCamera = AgoraTextureCamera(mContext, 1280, 720);
+    val _source: AgoraTextureCamera = AgoraTextureCamera(params["context"] as Context, 1280, 720);
     CommanInstance.setAgoraTextureCamera(_source)
-    engine?.setVideoSource(_source)
+    callback.code(engine?.setVideoSource(_source))
   }
 
   override fun enableWebSdkInteroperability(params: Map<String, *>, callback: Callback) {

@@ -53,6 +53,8 @@ class RCTAgoraRtcEngineModule(
           params?.toHashMap()?.toMutableMap()?.let {
             if (methodName == "create") {
               it["context"] = reactApplicationContext.applicationContext
+            } else if (methodName == "setVideoSource") {
+              it["context"] = reactApplicationContext.applicationContext
             }
             parameters.add(it)
           }
