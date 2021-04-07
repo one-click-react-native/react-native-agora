@@ -8,7 +8,7 @@ public class CommanInstance {
     private var rtcEngine: RtcEngine? = null
     private var agoraTextureCamera: AgoraTextureCamera? = null
     fun getRtcEngine(): RtcEngine? {
-      println("CommanInstance getRtcEngine $rtcEngine")
+      println("CommanInstance getRtcEngine")
       return rtcEngine
     }
     fun setRtcEngine(engine: RtcEngine?) {
