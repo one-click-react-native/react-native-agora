@@ -22,7 +22,8 @@ class RCTAgoraRtcPackage : ReactPackage {
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
     return listOf(
       RCTAgoraRtcSurfaceViewManager(),
-      RCTAgoraRtcTextureViewManager()
+      RCTAgoraRtcTextureViewManager(),
+      RCTAgoraRtcLocalTextureViewManager()
     )
   }
 }

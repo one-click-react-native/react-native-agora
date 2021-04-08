@@ -6,6 +6,8 @@ import {
   RtcSurfaceViewProps,
   RtcTextureView,
   RtcTextureViewProps,
+  RtcLocalTextureView,
+  RtcLocalTextureViewProps
 } from './common/RtcRenderView.native';
 
 /**
@@ -36,9 +38,26 @@ class TextureView extends Component<ViewProps & RtcTextureViewProps, {}> {
 }
 
 /**
+ * The TextureView class.
+ *
+ * **Note**
+ *
+ * TextureView is supported on Android only. iOS does not support TextureView.
+ * @noInheritDoc
+ */
+class LocalAgoraTextureView extends Component<ViewProps & RtcLocalTextureViewProps, {}> {
+  render() {
+    if (Platform.OS === 'ios')
+      throw new Error('TextureView not support for iOS');
+    return <RtcLocalTextureView {...this.props} uid={0} />;
+  }
+}
+
+/**
  * View for previewing local video.
  */
 export default {
   SurfaceView,
   TextureView,
+  LocalAgoraTextureView
 };
